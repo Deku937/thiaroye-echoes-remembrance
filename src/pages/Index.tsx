@@ -8,6 +8,7 @@ import Testimonies from '@/components/Testimonies';
 import Aftermath from '@/components/Aftermath';
 import Sources from '@/components/Sources';
 import Footer from '@/components/Footer';
+import { LanguageProvider } from '@/contexts/LanguageContext';
 
 const Index = () => {
   const [showContent, setShowContent] = useState(false);
@@ -24,24 +25,26 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation showContent={showContent} />
-      
-      <div id="hero">
-        <Hero onDiscover={handleDiscover} />
+    <LanguageProvider>
+      <div className="min-h-screen bg-background">
+        <Navigation showContent={showContent} />
+        
+        <div id="hero">
+          <Hero onDiscover={handleDiscover} />
+        </div>
+        
+        {showContent && (
+          <>
+            <Introduction />
+            <Revolt />
+            <Testimonies />
+            <Aftermath />
+            <Sources />
+            <Footer />
+          </>
+        )}
       </div>
-      
-      {showContent && (
-        <>
-          <Introduction />
-          <Revolt />
-          <Testimonies />
-          <Aftermath />
-          <Sources />
-          <Footer />
-        </>
-      )}
-    </div>
+    </LanguageProvider>
   );
 };
 

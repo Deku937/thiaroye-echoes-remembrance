@@ -2,9 +2,11 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowDown } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     setIsVisible(true);
@@ -20,20 +22,23 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
       
       <div className={`relative z-20 text-center max-w-4xl px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-gold mb-6 leading-tight drop-shadow-2xl">
-          Thiaroye 1944
+          {t('title')}
         </h1>
         
-        <div className="mb-8 bg-black/80 backdrop-blur-md rounded-lg p-8 border-2 border-gold/30 shadow-2xl">
-          <blockquote className="text-xl md:text-2xl lg:text-3xl text-gold italic font-light leading-relaxed drop-shadow-lg">
-            "Ils sont morts pour la France,<br />
-            mais pas payés par la France."
+        <div className="mb-8 bg-white/95 backdrop-blur-md rounded-lg p-8 border-2 border-gold shadow-2xl">
+          <blockquote className="text-xl md:text-2xl lg:text-3xl text-memorial-black italic font-medium leading-relaxed">
+            {t('quote').split('\n').map((line, index) => (
+              <span key={index}>
+                {line}
+                {index === 0 && <br />}
+              </span>
+            ))}
           </blockquote>
         </div>
         
-        <div className="bg-black/85 backdrop-blur-md rounded-lg p-8 mb-12 border-2 border-gold/20 shadow-2xl">
-          <p className="text-lg md:text-xl text-foreground leading-relaxed max-w-2xl mx-auto drop-shadow-lg">
-            Le 1er décembre 1944, des tirailleurs sénégalais se révoltent au camp de Thiaroye. 
-            L'armée française ouvre le feu. Une tragédie oubliée, une mémoire à honorer.
+        <div className="bg-gold/95 backdrop-blur-md rounded-lg p-8 mb-12 border-2 border-memorial-black shadow-2xl">
+          <p className="text-lg md:text-xl text-memorial-black font-medium leading-relaxed max-w-2xl mx-auto">
+            {t('description')}
           </p>
         </div>
         
@@ -42,7 +47,7 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
           size="lg"
           className="bg-gold hover:bg-gold/90 text-memorial-black font-bold px-8 py-6 text-lg transition-all duration-300 hover:scale-105 shadow-2xl border-2 border-gold/50 hover:border-gold"
         >
-          Découvrir leur histoire
+          {t('discoverButton')}
           <ArrowDown className="ml-2 h-5 w-5" />
         </Button>
       </div>
