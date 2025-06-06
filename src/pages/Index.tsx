@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useRef } from 'react';
 import Hero from '@/components/Hero';
 import Navigation from '@/components/Navigation';
 import Introduction from '@/components/Introduction';
@@ -8,43 +8,30 @@ import Testimonies from '@/components/Testimonies';
 import Aftermath from '@/components/Aftermath';
 import Sources from '@/components/Sources';
 import Footer from '@/components/Footer';
-import { LanguageProvider } from '@/contexts/LanguageContext';
 
 const Index = () => {
-  const [showContent, setShowContent] = useState(false);
-
-  const handleDiscover = () => {
-    setShowContent(true);
-    // Scroll to content after a short delay to allow for state update
-    setTimeout(() => {
-      const introSection = document.getElementById('intro');
-      if (introSection) {
-        introSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
+  const scrollToIntro = () => {
+    const introSection = document.getElementById('intro');
+    if (introSection) {
+      introSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
-    <LanguageProvider>
-      <div className="min-h-screen bg-background">
-        <Navigation showContent={showContent} />
-        
-        <div id="hero">
-          <Hero onDiscover={handleDiscover} />
-        </div>
-        
-        {showContent && (
-          <>
-            <Introduction />
-            <Revolt />
-            <Testimonies />
-            <Aftermath />
-            <Sources />
-            <Footer />
-          </>
-        )}
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      
+      <div id="hero">
+        <Hero onDiscover={scrollToIntro} />
       </div>
-    </LanguageProvider>
+      
+      <Introduction />
+      <Revolt />
+      <Testimonies />
+      <Aftermath />
+      <Sources />
+      <Footer />
+    </div>
   );
 };
 

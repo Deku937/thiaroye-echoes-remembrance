@@ -2,13 +2,10 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useLanguage } from '@/contexts/LanguageContext';
-import LanguageSelector from './LanguageSelector';
 
-const Navigation = ({ showContent }: { showContent: boolean }) => {
+const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,11 +25,11 @@ const Navigation = ({ showContent }: { showContent: boolean }) => {
   };
 
   const navItems = [
-    { id: 'intro', label: t('introduction') },
-    { id: 'revolt', label: t('revolt') },
-    { id: 'testimonies', label: t('testimonies') },
-    { id: 'aftermath', label: t('aftermath') },
-    { id: 'sources', label: t('sources') },
+    { id: 'intro', label: 'Introduction' },
+    { id: 'revolt', label: 'La Révolte' },
+    { id: 'testimonies', label: 'Témoignages' },
+    { id: 'aftermath', label: 'Et après ?' },
+    { id: 'sources', label: 'Sources' },
   ];
 
   return (
@@ -45,43 +42,35 @@ const Navigation = ({ showContent }: { showContent: boolean }) => {
             onClick={() => scrollToSection('hero')}
             className="font-serif text-xl md:text-2xl font-bold text-gold hover:text-gold/80 transition-colors"
           >
-            {t('title')}
+            Thiaroye 1944
           </button>
 
-          <div className="flex items-center space-x-4">
-            <LanguageSelector />
-            
-            {/* Desktop Navigation - only show if content is visible */}
-            {showContent && (
-              <div className="hidden md:flex items-center space-x-8">
-                {navItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => scrollToSection(item.id)}
-                    className="text-foreground hover:text-gold transition-colors duration-200"
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Mobile Navigation Toggle - only show if content is visible */}
-            {showContent && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="md:hidden text-foreground"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className="text-foreground hover:text-gold transition-colors duration-200"
               >
-                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </Button>
-            )}
+                {item.label}
+              </button>
+            ))}
           </div>
+
+          {/* Mobile Navigation Toggle */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="md:hidden text-foreground"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </Button>
         </div>
 
-        {/* Mobile Navigation Menu - only show if content is visible */}
-        {showContent && isMobileMenuOpen && (
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-border">
             <div className="flex flex-col space-y-4 pt-4">
               {navItems.map((item) => (
