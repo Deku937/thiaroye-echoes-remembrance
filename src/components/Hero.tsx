@@ -23,14 +23,14 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
           Thiaroye 1944
         </h1>
         
-        <div className="mb-8 bg-black/60 backdrop-blur-sm rounded-lg p-6 border border-gold/20">
+        <div className="mb-8 bg-black/80 backdrop-blur-md rounded-lg p-8 border-2 border-gold/30 shadow-2xl">
           <blockquote className="text-xl md:text-2xl lg:text-3xl text-gold italic font-light leading-relaxed drop-shadow-lg">
             "Ils sont morts pour la France,<br />
             mais pas payés par la France."
           </blockquote>
         </div>
         
-        <div className="bg-black/70 backdrop-blur-sm rounded-lg p-6 mb-12 border border-foreground/20">
+        <div className="bg-black/85 backdrop-blur-md rounded-lg p-8 mb-12 border-2 border-gold/20 shadow-2xl">
           <p className="text-lg md:text-xl text-foreground leading-relaxed max-w-2xl mx-auto drop-shadow-lg">
             Le 1er décembre 1944, des tirailleurs sénégalais se révoltent au camp de Thiaroye. 
             L'armée française ouvre le feu. Une tragédie oubliée, une mémoire à honorer.
