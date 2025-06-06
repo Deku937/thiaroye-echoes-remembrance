@@ -19,7 +19,7 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
       <div className="absolute inset-0 bg-gradient-to-br from-kaki/20 to-dark-red/20" />
       
       <div className={`relative z-20 text-center max-w-4xl px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-gold mb-6 leading-tight">
+        <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-yellow-400 mb-6 leading-tight">
           Thiaroye 1944
         </h1>
         
@@ -38,7 +38,7 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
         <Button 
           onClick={onDiscover}
           size="lg"
-          className="bg-gold hover:bg-gold/90 text-black font-semibold px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
+          className="bg-yellow-200 hover:bg-yellow-300 text-black font-semibold px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
         >
           Découvrir leur histoire
           <ArrowDown className="ml-2 h-5 w-5" />
