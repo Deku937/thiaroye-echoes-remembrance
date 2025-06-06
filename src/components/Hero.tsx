@@ -19,26 +19,28 @@ const Hero = ({ onDiscover }: { onDiscover: () => void }) => {
       <div className="absolute inset-0 bg-gradient-to-br from-kaki/20 to-dark-red/20" />
       
       <div className={`relative z-20 text-center max-w-4xl px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-gold mb-6 leading-tight">
+        <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold text-gold mb-6 leading-tight drop-shadow-2xl">
           Thiaroye 1944
         </h1>
         
-        <div className="mb-8">
-          <blockquote className="text-xl md:text-2xl lg:text-3xl text-foreground/90 italic font-light leading-relaxed">
+        <div className="mb-8 bg-black/60 backdrop-blur-sm rounded-lg p-6 border border-gold/20">
+          <blockquote className="text-xl md:text-2xl lg:text-3xl text-gold italic font-light leading-relaxed drop-shadow-lg">
             "Ils sont morts pour la France,<br />
             mais pas payés par la France."
           </blockquote>
         </div>
         
-        <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
-          Le 1er décembre 1944, des tirailleurs sénégalais se révoltent au camp de Thiaroye. 
-          L'armée française ouvre le feu. Une tragédie oubliée, une mémoire à honorer.
-        </p>
+        <div className="bg-black/70 backdrop-blur-sm rounded-lg p-6 mb-12 border border-foreground/20">
+          <p className="text-lg md:text-xl text-foreground leading-relaxed max-w-2xl mx-auto drop-shadow-lg">
+            Le 1er décembre 1944, des tirailleurs sénégalais se révoltent au camp de Thiaroye. 
+            L'armée française ouvre le feu. Une tragédie oubliée, une mémoire à honorer.
+          </p>
+        </div>
         
         <Button 
           onClick={onDiscover}
           size="lg"
-          className="bg-gold hover:bg-gold/90 text-black font-semibold px-8 py-6 text-lg transition-all duration-300 hover:scale-105"
+          className="bg-gold hover:bg-gold/90 text-memorial-black font-bold px-8 py-6 text-lg transition-all duration-300 hover:scale-105 shadow-2xl border-2 border-gold/50 hover:border-gold"
         >
           Découvrir leur histoire
           <ArrowDown className="ml-2 h-5 w-5" />

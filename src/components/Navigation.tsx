@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-const Navigation = () => {
+const Navigation = ({ showContent }: { showContent: boolean }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -45,32 +45,36 @@ const Navigation = () => {
             Thiaroye 1944
           </button>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="text-foreground hover:text-gold transition-colors duration-200"
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
+          {/* Desktop Navigation - only show if content is visible */}
+          {showContent && (
+            <div className="hidden md:flex items-center space-x-8">
+              {navItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="text-foreground hover:text-gold transition-colors duration-200"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          )}
 
-          {/* Mobile Navigation Toggle */}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="md:hidden text-foreground"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </Button>
+          {/* Mobile Navigation Toggle - only show if content is visible */}
+          {showContent && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="md:hidden text-foreground"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </Button>
+          )}
         </div>
 
-        {/* Mobile Navigation Menu */}
-        {isMobileMenuOpen && (
+        {/* Mobile Navigation Menu - only show if content is visible */}
+        {showContent && isMobileMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t border-border">
             <div className="flex flex-col space-y-4 pt-4">
               {navItems.map((item) => (
