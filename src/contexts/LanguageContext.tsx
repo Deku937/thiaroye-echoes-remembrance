@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface LanguageContextType {
@@ -9,7 +10,7 @@ interface LanguageContextType {
 const translations = {
   en: {
     // General
-    title: "The Forgotten Heroes",
+    title: "The Thiaroye Massacre 1944",
     subtitle: "In memory of the Senegalese Tirailleurs",
     description: "Discover the untold story of courage, sacrifice, and injustice that marked the history of Senegal and France.",
     discoverButton: "Discover Their Story",
@@ -24,9 +25,13 @@ const translations = {
     introTitle: "The Senegalese Tirailleurs",
     introSubtitle: "Heroes forgotten by history",
     
+    // Historical Context
+    historicalContext: "Historical Context",
+    contextDescription: "The Senegalese Tirailleurs were military units of the French Army, consisting of soldiers recruited in sub-Saharan Africa, primarily Senegal, but also in other French colonies. These troops were formed in 1857 and participated in all French colonial wars and campaigns, including World War I and World War II.",
+    
     // War period section
-    warPeriodTitle: "1939-1945: The Great War",
-    warPeriodContent: "During World War II, hundreds of thousands of Senegalese men were recruited to serve in the French colonial army. These brave soldiers, known as the Senegalese Tirailleurs, fought courageously on multiple fronts to defend freedom and democracy, often under harsh conditions and with inadequate equipment.",
+    "1939-1945 : La Grande Guerre": "1939-1945: The Great War",
+    "La Seconde Guerre mondiale fut le conflit le plus meurtrier de l'histoire. De 1939 à 1945, les combats se sont déroulés sur tous les continents, causant des millions de victimes aux deux camps : les Alliés et les forces de l'Axe.": "World War II was the deadliest conflict in history. From 1939 to 1945, battles took place on all continents, causing millions of casualties on both sides: the Allies and the Axis forces.",
     
     // Tirailleurs section
     tirailleursTitle: "The Senegalese Tirailleurs",
@@ -46,9 +51,22 @@ const translations = {
     massacreTitle: "The Massacre",
     massacreContent: "On December 1, 1944, French forces opened fire on the unarmed Senegalese soldiers. The official count reported 35 dead, but witnesses and historians believe the actual number was much higher, possibly reaching several hundred. This tragic event became known as the Thiaroye Massacre.",
     
+    // Navigation items
+    introduction: "Introduction",
+    revolt: "Revolt",
+    testimonies: "Testimonies",
+    aftermath: "Aftermath",
+    sources: "Sources",
+    
     // Testimonies section
     testimoniesTitle: "Voices and Memories",
     testimoniesDescription: "Testimonies from survivors and witnesses of the events",
+    survivorTestimony: "We were promised our wages, our bonuses... We had fought for France, we had shed our blood. But when we asked for what was rightfully ours, they shot us down like dogs.",
+    survivorName: "Amadou Diop",
+    historianTestimony: "The Thiaroye massacre represents one of the darkest episodes in French colonial history. The silencing of this tragedy for decades is a testament to the systematic erasure of African voices.",
+    historianName: "Dr. Mamadou Diouf",
+    poetTestimony: "In the silence of Thiaroye, the echoes of injustice still resonate. These men died twice: once by bullets, and once by forgetting.",
+    poetName: "Ousmane Sembène",
     
     // Aftermath section
     aftermathTitle: "The Aftermath",
@@ -66,7 +84,7 @@ const translations = {
     
     // Footer
     footerSubtitle: "Honoring the memory of the Senegalese Tirailleurs",
-    footerMessage: "Made with for historical truth",
+    footerMessage: "Made with ❤️ for historical truth",
     footerCopyright: "© 2024 The Forgotten Heroes. All rights reserved.",
     footerQuote: "\"A people without memory is a people without future\" - Aimé Césaire",
     
@@ -77,7 +95,7 @@ const translations = {
   },
   fr: {
     // General
-    title: "Les Héros Oubliés",
+    title: "Le Massacre de Thiaroye 1944",
     subtitle: "À la mémoire des Tirailleurs Sénégalais",
     description: "Découvrez l'histoire méconnue de courage, sacrifice et d'injustice qui a marqué l'histoire du Sénégal et de la France.",
     discoverButton: "Découvrir leur Histoire",
@@ -92,9 +110,13 @@ const translations = {
     introTitle: "Les Tirailleurs Sénégalais",
     introSubtitle: "Des héros oubliés par l'histoire",
     
+    // Historical Context
+    historicalContext: "Contexte Historique",
+    contextDescription: "Les Tirailleurs Sénégalais étaient des unités militaires de l'armée française, composées de soldats recrutés en Afrique subsaharienne, principalement au Sénégal, mais aussi dans d'autres colonies françaises. Ces troupes furent formées en 1857 et participèrent à toutes les guerres et campagnes coloniales françaises, notamment la Première et la Seconde Guerre mondiale.",
+    
     // War period section
-    warPeriodTitle: "1939-1945 : La Grande Guerre",
-    warPeriodContent: "Pendant la Seconde Guerre mondiale, des centaines de milliers d'hommes sénégalais furent recrutés pour servir dans l'armée coloniale française. Ces soldats courageux, connus sous le nom de Tirailleurs Sénégalais, combattirent avec bravoure sur plusieurs fronts pour défendre la liberté et la démocratie, souvent dans des conditions difficiles et avec un équipement inadéquat.",
+    "1939-1945 : La Grande Guerre": "1939-1945 : La Grande Guerre",
+    "La Seconde Guerre mondiale fut le conflit le plus meurtrier de l'histoire. De 1939 à 1945, les combats se sont déroulés sur tous les continents, causant des millions de victimes aux deux camps : les Alliés et les forces de l'Axe.": "La Seconde Guerre mondiale fut le conflit le plus meurtrier de l'histoire. De 1939 à 1945, les combats se sont déroulés sur tous les continents, causant des millions de victimes aux deux camps : les Alliés et les forces de l'Axe.",
     
     // Tirailleurs section
     tirailleursTitle: "Les Tirailleurs Sénégalais",
@@ -114,9 +136,22 @@ const translations = {
     massacreTitle: "Le Massacre",
     massacreContent: "Le 1er décembre 1944, les forces françaises ouvrirent le feu sur les soldats sénégalais non armés. Le décompte officiel fit état de 35 morts, mais les témoins et historiens croient que le nombre réel était bien plus élevé, atteignant possiblement plusieurs centaines. Cet événement tragique devint connu sous le nom de Massacre de Thiaroye.",
     
+    // Navigation items
+    introduction: "Introduction",
+    revolt: "Révolte",
+    testimonies: "Témoignages",
+    aftermath: "Conséquences",
+    sources: "Sources",
+    
     // Testimonies section
     testimoniesTitle: "Paroles et Mémoires",
     testimoniesDescription: "Témoignages de survivants et témoins des événements",
+    survivorTestimony: "On nous avait promis nos soldes, nos primes... Nous avions combattu pour la France, nous avions versé notre sang. Mais quand nous avons réclamé ce qui nous revenait de droit, ils nous ont abattus comme des chiens.",
+    survivorName: "Amadou Diop",
+    historianTestimony: "Le massacre de Thiaroye représente l'un des épisodes les plus sombres de l'histoire coloniale française. Le silence imposé sur cette tragédie pendant des décennies témoigne de l'effacement systématique des voix africaines.",
+    historianName: "Dr. Mamadou Diouf",
+    poetTestimony: "Dans le silence de Thiaroye, résonnent encore les échos de l'injustice. Ces hommes sont morts deux fois : une fois par les balles, une fois par l'oubli.",
+    poetName: "Ousmane Sembène",
     
     // Aftermath section
     aftermathTitle: "Les Conséquences",
@@ -134,7 +169,7 @@ const translations = {
     
     // Footer
     footerSubtitle: "Honorant la mémoire des Tirailleurs Sénégalais",
-    footerMessage: "Fait avec pour la vérité historique",
+    footerMessage: "Fait avec ❤️ pour la vérité historique",
     footerCopyright: "© 2024 Les Héros Oubliés. Tous droits réservés.",
     footerQuote: "\"Un peuple sans mémoire est un peuple sans avenir\" - Aimé Césaire",
     
