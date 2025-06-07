@@ -6,6 +6,7 @@ import Revolt from '@/components/Revolt';
 import Testimonies from '@/components/Testimonies';
 import Aftermath from '@/components/Aftermath';
 import Sources from '@/components/Sources';
+import VideoSection from '@/components/VideoSection';
 import Footer from '@/components/Footer';
 
 const Story = () => {
@@ -50,6 +51,7 @@ const Story = () => {
           <Testimonies />
           <Aftermath />
           <Sources />
+          <VideoSection />
           <Footer />
         </div>
       </div>

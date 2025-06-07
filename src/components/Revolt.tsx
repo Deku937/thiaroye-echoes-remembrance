@@ -33,17 +33,17 @@ const Revolt = () => {
     {
       title: t('demandTitle'),
       content: t('demandContent'),
-      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=800&q=80"
+      image: "https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/bc59/live/8a92ba00-a762-11ef-8ab9-9192db313061.jpg.webp"
     },
     {
       title: t('tensionTitle'),
       content: t('tensionContent'),
-      image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=800&q=80"
+      image: "https://img.20mn.fr/44aV6HAcSZqKLqCLsMB4ng/1444x920_photo-prise-le-04-decembre-1939-de-tirailleurs-senegalais-a-l-instruction-dans-un-camp-d-entrainement-dans-les-colonies-francaises-en-afrique"
     },
     {
       title: t('massacreTitle'),
       content: t('massacreContent'),
-      image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=800&q=80"
+      image: "https://s.france24.com/media/display/cd252448-af41-11ef-b506-005056a97e36/w:1280/p:16x9/000_36NC7L3.jpg"
     }
   ];
 
