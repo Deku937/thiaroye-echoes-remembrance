@@ -32,7 +32,7 @@ const Introduction = () => {
   const sections = [
     {
       title: t('1939-1945 : La Grande Guerre'),
-      content: t('warContent'),
+      content: t('La Seconde Guerre mondiale fut le conflit le plus meurtrier de l\'histoire. De 1939 à 1945, les combats se sont déroulés sur tous les continents, causant des millions de victimes aux deux camps : les Alliés et les forces de l\'Axe.'),
       image: "https://medias.histoire-et-civilisations.com/api/v1/images/view/5f6dec863e45460346140a16/width_1000/image.jpg"
     },
     {
