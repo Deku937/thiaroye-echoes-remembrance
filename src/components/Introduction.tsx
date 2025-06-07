@@ -31,7 +31,7 @@ const Introduction = () => {
 
   const sections = [
     {
-      title: t('1939-1945 : La Grande Guerre),
+      title: t('1939-1945 : La Grande Guerre'),
       content: t('warContent'),
       image: "https://medias.histoire-et-civilisations.com/api/v1/images/view/5f6dec863e45460346140a16/width_1000/image.jpg"
     },
