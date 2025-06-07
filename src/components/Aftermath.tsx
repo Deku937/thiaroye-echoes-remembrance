@@ -62,16 +62,16 @@ const Aftermath = () => {
     <section 
       id="aftermath" 
       ref={sectionRef}
-      className="py-20 bg-gradient-to-b from-card to-background"
+      className="py-20 bg-gradient-to-b from-gray-700/30 to-gray-800/50"
     >
       <div className="max-w-6xl mx-auto px-6">
         <div className={`text-center mb-16 transition-all duration-1000 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-          <h2 className="font-serif text-3xl md:text-5xl font-bold text-gold mb-6">
+          <h2 className="font-serif text-3xl md:text-5xl font-bold text-yellow-300 mb-6">
             Et Après ?
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
             L'histoire de Thiaroye ne s'arrête pas en 1944. C'est le début d'un long combat 
             pour la mémoire et la reconnaissance.
           </p>
@@ -84,14 +84,14 @@ const Aftermath = () => {
           {consequences.map((item, index) => (
             <div 
               key={index}
-              className="text-center p-6 bg-card/50 rounded-lg border border-border hover:bg-card/70 transition-all duration-300"
+              className="text-center p-6 bg-gray-800/50 rounded-lg border border-gray-600 hover:bg-gray-800/70 transition-all duration-300"
             >
-              <item.icon className="h-12 w-12 text-gold mx-auto mb-4" />
-              <h3 className="font-serif text-lg font-semibold text-foreground mb-2">
+              <item.icon className="h-12 w-12 text-yellow-300 mx-auto mb-4" />
+              <h3 className="font-serif text-lg font-semibold text-gray-200 mb-2">
                 {item.title}
               </h3>
-              <div className="text-sm text-gold font-medium mb-3">{item.period}</div>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <div className="text-sm text-yellow-300 font-medium mb-3">{item.period}</div>
+              <p className="text-sm text-gray-300 leading-relaxed">
                 {item.description}
               </p>
             </div>
@@ -102,7 +102,7 @@ const Aftermath = () => {
         <div className={`transition-all duration-1000 delay-500 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-          <h3 className="font-serif text-2xl md:text-3xl font-semibold text-center text-gold mb-12">
+          <h3 className="font-serif text-2xl md:text-3xl font-semibold text-center text-yellow-300 mb-12">
             80 Ans de Mémoire
           </h3>
           
@@ -110,15 +110,15 @@ const Aftermath = () => {
             <div className="flex items-center justify-between py-8">
               {timeline.map((item, index) => (
                 <div key={index} className="flex-1 text-center relative">
-                  <div className="relative z-10 bg-gold text-black rounded-full w-16 h-16 flex items-center justify-center font-bold text-sm mx-auto mb-4">
+                  <div className="relative z-10 bg-yellow-300 text-black rounded-full w-16 h-16 flex items-center justify-center font-bold text-sm mx-auto mb-4">
                     {item.year}
                   </div>
-                  <p className="text-sm text-foreground font-medium max-w-32 mx-auto leading-tight">
+                  <p className="text-sm text-gray-200 font-medium max-w-32 mx-auto leading-tight">
                     {item.event}
                   </p>
                   
                   {index < timeline.length - 1 && (
-                    <div className="absolute top-8 left-1/2 w-full h-0.5 bg-gold/30 transform -translate-y-1/2 z-0" />
+                    <div className="absolute top-8 left-1/2 w-full h-0.5 bg-yellow-300/30 transform -translate-y-1/2 z-0" />
                   )}
                 </div>
               ))}
@@ -127,17 +127,17 @@ const Aftermath = () => {
         </div>
 
         {/* Call to action */}
-        <div className={`text-center mt-16 p-8 bg-gold/10 border border-gold/20 rounded-lg transition-all duration-1000 delay-700 ${
+        <div className={`text-center mt-16 p-8 bg-yellow-300/10 border border-yellow-300/20 rounded-lg transition-all duration-1000 delay-700 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-          <h3 className="font-serif text-2xl font-semibold text-gold mb-4">
+          <h3 className="font-serif text-2xl font-semibold text-yellow-300 mb-4">
             La Mémoire Continue
           </h3>
-          <p className="text-lg text-foreground/90 mb-6 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-200 mb-6 max-w-2xl mx-auto leading-relaxed">
             Aujourd'hui encore, des familles de tirailleurs cherchent des réponses. 
             Des historiens continuent leurs recherches. La mémoire de Thiaroye reste vivante.
           </p>
-          <blockquote className="font-serif text-xl italic text-foreground">
+          <blockquote className="font-serif text-xl italic text-gray-200">
             "Se souvenir, c'est résister à l'oubli."
           </blockquote>
         </div>

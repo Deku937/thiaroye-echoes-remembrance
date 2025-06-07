@@ -59,15 +59,15 @@ const Testimonies = () => {
   }, []);
 
   return (
-    <section id="testimonies" className="py-20 bg-gradient-to-b from-background to-card">
+    <section id="testimonies" className="py-20 bg-gradient-to-b from-gray-800/50 to-gray-700/30">
       <div className="max-w-4xl mx-auto px-6">
         <div className={`text-center mb-16 transition-all duration-1000 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-          <h2 className="font-serif text-3xl md:text-5xl font-bold text-gold mb-6">
+          <h2 className="font-serif text-3xl md:text-5xl font-bold text-yellow-300 mb-6">
             Paroles et Mémoires
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Des voix qui témoignent, des historiens qui analysent, une mémoire qui perdure.
           </p>
         </div>
@@ -76,22 +76,22 @@ const Testimonies = () => {
         <div className={`relative min-h-[400px] transition-all duration-1000 delay-300 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}>
-          <div className="absolute inset-0 bg-card/30 rounded-2xl border border-border backdrop-blur-sm" />
+          <div className="absolute inset-0 bg-gray-800/60 rounded-2xl border border-gray-600 backdrop-blur-sm" />
           
           <div className="relative p-8 md:p-12">
-            <Quote className="h-12 w-12 text-gold/30 mb-6" />
+            <Quote className="h-12 w-12 text-yellow-300/30 mb-6" />
             
             <div className="transition-all duration-500 ease-in-out">
-              <blockquote className="font-serif text-xl md:text-2xl italic text-foreground leading-relaxed mb-8">
+              <blockquote className="font-serif text-xl md:text-2xl italic text-gray-200 leading-relaxed mb-8">
                 "{testimonies[currentTestimony].text}"
               </blockquote>
               
-              <div className="border-t border-border pt-6">
+              <div className="border-t border-gray-600 pt-6">
                 <cite className="not-italic">
-                  <div className="font-semibold text-gold text-lg">
+                  <div className="font-semibold text-yellow-300 text-lg">
                     {testimonies[currentTestimony].author}
                   </div>
-                  <div className="text-muted-foreground text-sm mt-1">
+                  <div className="text-gray-300 text-sm mt-1">
                     {testimonies[currentTestimony].role} • {testimonies[currentTestimony].year}
                   </div>
                 </cite>
@@ -111,8 +111,8 @@ const Testimonies = () => {
                 onClick={() => setCurrentTestimony(index)}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   index === currentTestimony 
-                    ? 'bg-gold scale-110' 
-                    : 'bg-gold/30 hover:bg-gold/50'
+                    ? 'bg-yellow-300 scale-110' 
+                    : 'bg-yellow-300/30 hover:bg-yellow-300/50'
                 }`}
               />
             ))}
@@ -125,7 +125,7 @@ const Testimonies = () => {
               onClick={() => setCurrentTestimony((prev) => 
                 prev === 0 ? testimonies.length - 1 : prev - 1
               )}
-              className="border-gold text-gold hover:bg-gold hover:text-black"
+              className="border-yellow-300 text-yellow-300 hover:bg-yellow-300 hover:text-black"
             >
               Précédent
             </Button>
@@ -133,7 +133,7 @@ const Testimonies = () => {
               variant="outline"
               size="sm"
               onClick={() => setCurrentTestimony((prev) => (prev + 1) % testimonies.length)}
-              className="border-gold text-gold hover:bg-gold hover:text-black"
+              className="border-yellow-300 text-yellow-300 hover:bg-yellow-300 hover:text-black"
             >
               Suivant
             </Button>
