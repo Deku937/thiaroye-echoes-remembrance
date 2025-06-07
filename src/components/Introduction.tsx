@@ -31,7 +31,7 @@ const Introduction = () => {
     {
       title: "1939-1945 : La Grande Guerre",
       content: "Pendant la Seconde Guerre mondiale, plus de 200 000 tirailleurs africains sont mobilisés pour défendre la France. Ils viennent du Sénégal, du Mali, de Côte d'Ivoire et d'autres colonies françaises.",
-      image: "photo-1527576539890-dfa815648363"
+      image: "https://medias.histoire-et-civilisations.com/api/v1/images/view/5f6dec863e45460346140a16/width_1000/image.jpg"
     },
     {
       title: "Les Tirailleurs Sénégalais",
