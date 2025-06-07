@@ -2,10 +2,16 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useNavigate, useLocation } from 'react-router-dom';
+import LanguageSelector from './LanguageSelector';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Navigation = ({ showNavItems }: { showNavItems: boolean }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,19 +23,33 @@ const Navigation = ({ showNavItems }: { showNavItems: boolean }) => {
   }, []);
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
+    if (location.pathname !== '/story') {
+      navigate('/story');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
+    setIsMobileMenuOpen(false);
+  };
+
+  const goToHome = () => {
+    navigate('/');
   };
 
   const navItems = [
-    { id: 'intro', label: 'Introduction' },
-    { id: 'revolt', label: 'La Révolte' },
-    { id: 'testimonies', label: 'Témoignages' },
-    { id: 'aftermath', label: 'Et après ?' },
-    { id: 'sources', label: 'Sources' },
+    { id: 'intro', label: t('introduction') },
+    { id: 'revolt', label: t('revolt') },
+    { id: 'testimonies', label: t('testimonies') },
+    { id: 'aftermath', label: t('aftermath') },
+    { id: 'sources', label: t('sources') },
   ];
 
   return (
@@ -39,38 +59,42 @@ const Navigation = ({ showNavItems }: { showNavItems: boolean }) => {
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <button
-            onClick={() => scrollToSection('hero')}
-            className="font-serif text-xl md:text-2xl font-bold text-yellow-400 hover:text-yellow-300 transition-colors"
+            onClick={goToHome}
+            className="font-serif text-xl md:text-2xl font-bold text-yellow-300 hover:text-yellow-200 transition-colors"
           >
-            Thiaroye 1944
+            {t('title')}
           </button>
 
-          {/* Desktop Navigation - only show if content is visible */}
-          {showNavItems && (
-            <div className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className="text-foreground hover:text-gold transition-colors duration-200"
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-          )}
+          <div className="flex items-center gap-4">
+            <LanguageSelector />
+            
+            {/* Desktop Navigation - only show if content is visible */}
+            {showNavItems && (
+              <div className="hidden md:flex items-center space-x-8">
+                {navItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className="text-foreground hover:text-gold transition-colors duration-200"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            )}
 
-          {/* Mobile Navigation Toggle - only show if content is visible */}
-          {showNavItems && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="md:hidden text-foreground"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </Button>
-          )}
+            {/* Mobile Navigation Toggle - only show if content is visible */}
+            {showNavItems && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="md:hidden text-foreground"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </Button>
+            )}
+          </div>
         </div>
 
         {/* Mobile Navigation Menu */}
