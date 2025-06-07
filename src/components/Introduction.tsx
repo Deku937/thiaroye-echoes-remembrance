@@ -46,13 +46,13 @@ const Introduction = () => {
   ];
 
   return (
-    <section id="intro" className="py-20 bg-gradient-to-b from-background to-card">
+    <section id="intro" className="py-20 bg-gradient-to-b from-gray-800/50 to-gray-700/30">
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="font-serif text-3xl md:text-5xl font-bold text-gold mb-6">
+          <h2 className="font-serif text-3xl md:text-5xl font-bold text-yellow-300 mb-6">
             Le Contexte Historique
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Pour comprendre Thiaroye, il faut d'abord comprendre l'engagement des tirailleurs sénégalais dans la guerre.
           </p>
         </div>
@@ -72,10 +72,10 @@ const Introduction = () => {
                 index % 2 === 1 ? 'md:grid-flow-col-dense' : ''
               }`}>
                 <div className={index % 2 === 1 ? 'md:col-start-2' : ''}>
-                  <h3 className="font-serif text-2xl md:text-3xl font-semibold text-gold mb-6">
+                  <h3 className="font-serif text-2xl md:text-3xl font-semibold text-yellow-300 mb-6">
                     {section.title}
                   </h3>
-                  <p className="text-lg text-foreground/90 leading-relaxed">
+                  <p className="text-lg text-gray-200 leading-relaxed">
                     {section.content}
                   </p>
                 </div>
