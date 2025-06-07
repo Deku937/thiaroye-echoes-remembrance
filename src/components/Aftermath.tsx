@@ -1,145 +1,97 @@
 
 import { useEffect, useRef, useState } from 'react';
-import { Clock, Eye, Scale, Heart } from 'lucide-react';
+import { Shield, Users, Heart } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Aftermath = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [visibleSections, setVisibleSections] = useState<number[]>([]);
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const { t } = useLanguage();
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
+    const observers = sectionRefs.current.map((ref, index) => {
+      if (!ref) return null;
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setVisibleSections(prev => [...new Set([...prev, index])]);
+          }
+        },
+        { threshold: 0.3 }
+      );
 
-    return () => observer.disconnect();
+      observer.observe(ref);
+      return observer;
+    });
+
+    return () => {
+      observers.forEach(observer => observer?.disconnect());
+    };
   }, []);
 
-  const consequences = [
+  const sections = [
     {
-      icon: Eye,
-      title: "Le Silence",
-      period: "1944-1980",
-      description: "Pendant près de 40 ans, la France maintient le silence sur les événements de Thiaroye. Les archives sont classées secrètes."
+      icon: Shield,
+      title: t('coverupTitle'),
+      content: t('coverupContent'),
+      color: 'text-red-400'
     },
     {
-      icon: Clock,
-      title: "Les Premières Recherches",
-      period: "1980-2000",
-      description: "Des historiens comme Armelle Mabon commencent à révéler la vérité sur le massacre, malgré la réticence officielle."
-    },
-    {
-      icon: Scale,
-      title: "Reconnaissance Partielle",
-      period: "2000-2010",
-      description: "La France reconnaît officiellement la 'tragédie' de Thiaroye, mais refuse encore de parler de 'massacre'."
+      icon: Users,
+      title: t('recognitionTitle'),
+      content: t('recognitionContent'),
+      color: 'text-blue-400'
     },
     {
       icon: Heart,
-      title: "Mémoire Vivante",
-      period: "2010-Aujourd'hui",
-      description: "Au Sénégal et en France, la mémoire de Thiaroye devient un symbole de la lutte contre l'oubli colonial."
+      title: t('memoryTitle'),
+      content: t('memoryContent'),
+      color: 'text-yellow-400'
     }
   ];
 
-  const timeline = [
-    { year: "1944", event: "Massacre de Thiaroye" },
-    { year: "1988", event: "Film 'Camp de Thiaroye' d'Ousmane Sembène" },
-    { year: "2004", event: "Reconnaissance officielle française" },
-    { year: "2014", event: "70e anniversaire - Nouvelles commémorations" },
-    { year: "2024", event: "80e anniversaire - Mémoire plus que jamais vivante" }
-  ];
-
   return (
-    <section 
-      id="aftermath" 
-      ref={sectionRef}
-      className="py-20 bg-gradient-to-b from-gray-700/30 to-gray-800/50"
-    >
+    <section id="aftermath" className="py-20 bg-gradient-to-b from-gray-500/10 to-gray-800/20">
       <div className="max-w-6xl mx-auto px-6">
-        <div className={`text-center mb-16 transition-all duration-1000 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
+        <div className="text-center mb-16">
           <h2 className="font-serif text-3xl md:text-5xl font-bold text-yellow-300 mb-6">
-            Et Après ?
+            {t('aftermathTitle')}
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            L'histoire de Thiaroye ne s'arrête pas en 1944. C'est le début d'un long combat 
-            pour la mémoire et la reconnaissance.
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            {t('aftermathDescription')}
           </p>
         </div>
 
-        {/* Consequences Grid */}
-        <div className={`grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16 transition-all duration-1000 delay-300 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          {consequences.map((item, index) => (
-            <div 
-              key={index}
-              className="text-center p-6 bg-gray-800/50 rounded-lg border border-gray-600 hover:bg-gray-800/70 transition-all duration-300"
-            >
-              <item.icon className="h-12 w-12 text-yellow-300 mx-auto mb-4" />
-              <h3 className="font-serif text-lg font-semibold text-gray-200 mb-2">
-                {item.title}
-              </h3>
-              <div className="text-sm text-yellow-300 font-medium mb-3">{item.period}</div>
-              <p className="text-sm text-gray-300 leading-relaxed">
-                {item.description}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Timeline */}
-        <div className={`transition-all duration-1000 delay-500 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          <h3 className="font-serif text-2xl md:text-3xl font-semibold text-center text-yellow-300 mb-12">
-            80 Ans de Mémoire
-          </h3>
-          
-          <div className="relative overflow-hidden">
-            <div className="flex items-center justify-between py-8">
-              {timeline.map((item, index) => (
-                <div key={index} className="flex-1 text-center relative">
-                  <div className="relative z-10 bg-yellow-300 text-black rounded-full w-16 h-16 flex items-center justify-center font-bold text-sm mx-auto mb-4">
-                    {item.year}
+        <div className="grid md:grid-cols-3 gap-8">
+          {sections.map((section, index) => {
+            const IconComponent = section.icon;
+            return (
+              <div
+                key={index}
+                ref={el => sectionRefs.current[index] = el}
+                className={`transition-all duration-1000 delay-${index * 200} ${
+                  visibleSections.includes(index) 
+                    ? 'opacity-100 translate-y-0' 
+                    : 'opacity-0 translate-y-10'
+                }`}
+              >
+                <div className="bg-gray-800/40 backdrop-blur-sm rounded-lg p-8 h-full border border-gray-600/30 hover:border-yellow-300/50 transition-all duration-300">
+                  <div className="text-center mb-6">
+                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-700/50 mb-4`}>
+                      <IconComponent className={`h-8 w-8 ${section.color}`} />
+                    </div>
+                    <h3 className="font-serif text-xl font-semibold text-yellow-300 mb-4">
+                      {section.title}
+                    </h3>
                   </div>
-                  <p className="text-sm text-gray-200 font-medium max-w-32 mx-auto leading-tight">
-                    {item.event}
+                  <p className="text-gray-200 leading-relaxed text-center">
+                    {section.content}
                   </p>
-                  
-                  {index < timeline.length - 1 && (
-                    <div className="absolute top-8 left-1/2 w-full h-0.5 bg-yellow-300/30 transform -translate-y-1/2 z-0" />
-                  )}
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Call to action */}
-        <div className={`text-center mt-16 p-8 bg-yellow-300/10 border border-yellow-300/20 rounded-lg transition-all duration-1000 delay-700 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          <h3 className="font-serif text-2xl font-semibold text-yellow-300 mb-4">
-            La Mémoire Continue
-          </h3>
-          <p className="text-lg text-gray-200 mb-6 max-w-2xl mx-auto leading-relaxed">
-            Aujourd'hui encore, des familles de tirailleurs cherchent des réponses. 
-            Des historiens continuent leurs recherches. La mémoire de Thiaroye reste vivante.
-          </p>
-          <blockquote className="font-serif text-xl italic text-gray-200">
-            "Se souvenir, c'est résister à l'oubli."
-          </blockquote>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

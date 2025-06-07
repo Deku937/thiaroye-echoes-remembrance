@@ -1,143 +1,103 @@
 
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Quote } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Testimonies = () => {
-  const [currentTestimony, setCurrentTestimony] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
+  const [visibleSections, setVisibleSections] = useState<number[]>([]);
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const { t } = useLanguage();
+
+  useEffect(() => {
+    const observers = sectionRefs.current.map((ref, index) => {
+      if (!ref) return null;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setVisibleSections(prev => [...new Set([...prev, index])]);
+          }
+        },
+        { threshold: 0.3 }
+      );
+
+      observer.observe(ref);
+      return observer;
+    });
+
+    return () => {
+      observers.forEach(observer => observer?.disconnect());
+    };
+  }, []);
 
   const testimonies = [
     {
-      text: "Nous étions des soldats français. Nous avions servi la France avec honneur. Mais ce jour-là, nous avons compris que nous n'étions que des indigènes à leurs yeux.",
-      author: "Témoignage d'un survivant de Thiaroye",
-      role: "Ancien tirailleur sénégalais",
-      year: "1988"
+      quote: t('survivorTestimony'),
+      author: t('survivorName'),
+      role: "",
+      image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=400&q=80"
     },
     {
-      text: "Le massacre de Thiaroye illustre parfaitement le mépris de l'administration coloniale française pour ceux qui avaient versé leur sang pour la métropole.",
-      author: "Aimé Césaire",
-      role: "Poète et homme politique",
-      year: "1950"
+      quote: t('historianTestimony'),
+      author: t('historianName'),
+      role: "",
+      image: "https://images.unsplash.com/photo-1500673922987-e212871fec22?auto=format&fit=crop&w=400&q=80"
     },
     {
-      text: "Ces hommes demandaient simplement justice. Ils voulaient être payés comme leurs camarades blancs. Pour cela, ils ont été abattus.",
-      author: "Armelle Mabon",
-      role: "Historienne",
-      year: "2010"
-    },
-    {
-      text: "Thiaroye n'est pas un fait divers colonial. C'est un crime contre l'humanité qui révèle la nature profonde du système colonial français.",
-      author: "Martin Mourre",
-      role: "Historien",
-      year: "2020"
+      quote: t('poetTestimony'),
+      author: t('poetName'),
+      role: "",
+      image: "https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?auto=format&fit=crop&w=400&q=80"
     }
   ];
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    const section = document.getElementById('testimonies');
-    if (section) observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimony((prev) => (prev + 1) % testimonies.length);
-    }, 6000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section id="testimonies" className="py-20 bg-gradient-to-b from-gray-800/50 to-gray-700/30">
-      <div className="max-w-4xl mx-auto px-6">
-        <div className={`text-center mb-16 transition-all duration-1000 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
+    <section id="testimonies" className="py-20 bg-gradient-to-b from-gray-600/20 to-gray-500/10">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="text-center mb-16">
           <h2 className="font-serif text-3xl md:text-5xl font-bold text-yellow-300 mb-6">
-            Paroles et Mémoires
+            {t('testimoniesTitle')}
           </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Des voix qui témoignent, des historiens qui analysent, une mémoire qui perdure.
+            {t('testimoniesDescription')}
           </p>
         </div>
 
-        {/* Testimony Display */}
-        <div className={`relative min-h-[400px] transition-all duration-1000 delay-300 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          <div className="absolute inset-0 bg-gray-800/60 rounded-2xl border border-gray-600 backdrop-blur-sm" />
-          
-          <div className="relative p-8 md:p-12">
-            <Quote className="h-12 w-12 text-yellow-300/30 mb-6" />
-            
-            <div className="transition-all duration-500 ease-in-out">
-              <blockquote className="font-serif text-xl md:text-2xl italic text-gray-200 leading-relaxed mb-8">
-                "{testimonies[currentTestimony].text}"
-              </blockquote>
-              
-              <div className="border-t border-gray-600 pt-6">
-                <cite className="not-italic">
-                  <div className="font-semibold text-yellow-300 text-lg">
-                    {testimonies[currentTestimony].author}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {testimonies.map((testimony, index) => (
+            <div
+              key={index}
+              ref={el => sectionRefs.current[index] = el}
+              className={`transition-all duration-1000 delay-${index * 200} ${
+                visibleSections.includes(index) 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-10'
+              }`}
+            >
+              <div className="bg-gray-800/40 backdrop-blur-sm rounded-lg p-8 h-full border border-gray-600/30 hover:border-yellow-300/50 transition-all duration-300">
+                <div className="mb-6">
+                  <Quote className="h-8 w-8 text-yellow-300 mb-4" />
+                  <p className="text-gray-200 text-lg leading-relaxed italic">
+                    {testimony.quote}
+                  </p>
+                </div>
+                
+                <div className="flex items-center space-x-4">
+                  <img
+                    src={testimony.image}
+                    alt={testimony.author}
+                    className="w-12 h-12 rounded-full object-cover border-2 border-yellow-300/50"
+                  />
+                  <div>
+                    <h4 className="font-semibold text-yellow-300">{testimony.author}</h4>
+                    {testimony.role && (
+                      <p className="text-sm text-gray-400">{testimony.role}</p>
+                    )}
                   </div>
-                  <div className="text-gray-300 text-sm mt-1">
-                    {testimonies[currentTestimony].role} • {testimonies[currentTestimony].year}
-                  </div>
-                </cite>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-
-        {/* Navigation */}
-        <div className={`flex justify-center items-center space-x-4 mt-8 transition-all duration-1000 delay-500 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          <div className="flex space-x-2">
-            {testimonies.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentTestimony(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentTestimony 
-                    ? 'bg-yellow-300 scale-110' 
-                    : 'bg-yellow-300/30 hover:bg-yellow-300/50'
-                }`}
-              />
-            ))}
-          </div>
-          
-          <div className="flex space-x-2 ml-6">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentTestimony((prev) => 
-                prev === 0 ? testimonies.length - 1 : prev - 1
-              )}
-              className="border-yellow-300 text-yellow-300 hover:bg-yellow-300 hover:text-black"
-            >
-              Précédent
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setCurrentTestimony((prev) => (prev + 1) % testimonies.length)}
-              className="border-yellow-300 text-yellow-300 hover:bg-yellow-300 hover:text-black"
-            >
-              Suivant
-            </Button>
-          </div>
+          ))}
         </div>
       </div>
     </section>

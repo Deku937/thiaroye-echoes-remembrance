@@ -1,9 +1,11 @@
 
 import { useEffect, useRef, useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Introduction = () => {
   const [visibleSections, setVisibleSections] = useState<number[]>([]);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const observers = sectionRefs.current.map((ref, index) => {
@@ -29,19 +31,19 @@ const Introduction = () => {
 
   const sections = [
     {
-      title: "1939-1945 : La Grande Guerre",
-      content: "Pendant la Seconde Guerre mondiale, plus de 200 000 tirailleurs africains sont mobilisés pour défendre la France. Ils viennent du Sénégal, du Mali, de Côte d'Ivoire et d'autres colonies françaises.",
+      title: t('warTitle'),
+      content: t('warContent'),
       image: "https://medias.histoire-et-civilisations.com/api/v1/images/view/5f6dec863e45460346140a16/width_1000/image.jpg"
     },
     {
-      title: "Les Tirailleurs Sénégalais",
-      content: "Ces soldats africains, appelés \"tirailleurs sénégalais\" indépendamment de leur origine, combattent sur tous les fronts : France, Italie, Indochine. Ils paient un lourd tribut à la guerre.",
-      image: "photo-1487958449943-2429e8be8625"
+      title: t('tirailleursTitle'),
+      content: t('tirailleursContent'),
+      image: "https://www.pressafrik.com/photo/art/grande/85124758-60726217.jpg?v=1735000253"
     },
     {
-      title: "Le Retour au Pays",
-      content: "En novembre 1944, 1 280 tirailleurs démobilisés arrivent au camp de transit de Thiaroye, près de Dakar. Ils attendent leurs indemnités et leur solde, promises mais jamais versées.",
-      image: "photo-1518005020951-eccb494ad742"
+      title: t('returnTitle'),
+      content: t('returnContent'),
+      image: "https://www.senegal-online.com/wp-content/uploads/2023/04/tirailleurs-senegalais.jpg"
     }
   ];
 
@@ -50,10 +52,10 @@ const Introduction = () => {
       <div className="max-w-4xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="font-serif text-3xl md:text-5xl font-bold text-yellow-300 mb-6">
-            Le Contexte Historique
+            {t('historicalContext')}
           </h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Pour comprendre Thiaroye, il faut d'abord comprendre l'engagement des tirailleurs sénégalais dans la guerre.
+            {t('contextDescription')}
           </p>
         </div>
 
@@ -83,7 +85,7 @@ const Introduction = () => {
                 <div className={`${index % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}`}>
                   <div className="relative overflow-hidden rounded-lg shadow-2xl">
                     <img
-                      src={`https://images.unsplash.com/${section.image}?auto=format&fit=crop&w=800&q=80`}
+                      src={section.image}
                       alt={section.title}
                       className="w-full h-64 md:h-80 object-cover transition-transform duration-500 hover:scale-105"
                     />

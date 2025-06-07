@@ -1,139 +1,100 @@
 
 import { useEffect, useRef, useState } from 'react';
-import { Calendar, MapPin, Users, AlertTriangle } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Revolt = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const [visibleSections, setVisibleSections] = useState<number[]>([]);
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const { t } = useLanguage();
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
+    const observers = sectionRefs.current.map((ref, index) => {
+      if (!ref) return null;
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setVisibleSections(prev => [...new Set([...prev, index])]);
+          }
+        },
+        { threshold: 0.3 }
+      );
 
-    return () => observer.disconnect();
+      observer.observe(ref);
+      return observer;
+    });
+
+    return () => {
+      observers.forEach(observer => observer?.disconnect());
+    };
   }, []);
 
-  const timeline = [
+  const sections = [
     {
-      date: "20 novembre 1944",
-      event: "Arrivée des tirailleurs à Thiaroye",
-      description: "1 280 soldats démobilisés arrivent au camp de transit de Thiaroye, près de Dakar."
+      title: t('demandTitle'),
+      content: t('demandContent'),
+      image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=800&q=80"
     },
     {
-      date: "21-30 novembre",
-      event: "Tensions croissantes",
-      description: "Les soldats attendent leurs indemnités. L'administration française tente de les payer avec des francs CFA dévalués."
+      title: t('tensionTitle'),
+      content: t('tensionContent'),
+      image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=800&q=80"
     },
     {
-      date: "1er décembre 1944",
-      event: "La révolte éclate",
-      description: "Les tirailleurs refusent d'être payés en monnaie dévaluée. Ils prennent en otage le général Dagnan."
-    },
-    {
-      date: "1er décembre - matin",
-      event: "La fusillade",
-      description: "L'armée française ouvre le feu sur les soldats désarmés. Le bilan officiel : 35 morts. La réalité : bien plus."
+      title: t('massacreTitle'),
+      content: t('massacreContent'),
+      image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?auto=format&fit=crop&w=800&q=80"
     }
   ];
 
   return (
-    <section 
-      id="revolt" 
-      ref={sectionRef}
-      className="py-20 bg-gradient-to-b from-gray-700/30 to-gray-800/50 relative"
-    >
-      <div className="max-w-6xl mx-auto px-6">
-        <div className={`text-center mb-16 transition-all duration-1000 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          <h2 className="font-serif text-3xl md:text-5xl font-bold text-red-400 mb-6">
-            Thiaroye : La Révolte de l'Honneur
+    <section id="revolt" className="py-20 bg-gradient-to-b from-gray-700/30 to-gray-600/20">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <h2 className="font-serif text-3xl md:text-5xl font-bold text-yellow-300 mb-6">
+            {t('revoltTitle')}
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Le 1er décembre 1944, des soldats qui ont servi la France avec bravoure 
-            se révoltent contre l'injustice. Leur crime ? Demander ce qui leur était dû.
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            {t('revoltDescription')}
           </p>
         </div>
 
-        {/* Statistics */}
-        <div className={`grid md:grid-cols-4 gap-8 mb-16 transition-all duration-1000 delay-300 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          {[
-            { icon: Users, number: "1 280", label: "Soldats concernés" },
-            { icon: Calendar, number: "4", label: "Années de guerre" },
-            { icon: MapPin, number: "1", label: "Camp de Thiaroye" },
-            { icon: AlertTriangle, number: "35+", label: "Victimes officielles" }
-          ].map((stat, index) => (
-            <div key={index} className="text-center p-6 bg-gray-800/50 rounded-lg border border-gray-600">
-              <stat.icon className="h-8 w-8 text-yellow-300 mx-auto mb-4" />
-              <div className="font-serif text-3xl font-bold text-yellow-300 mb-2">{stat.number}</div>
-              <div className="text-sm text-gray-300">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Timeline */}
-        <div className={`transition-all duration-1000 delay-500 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          <h3 className="font-serif text-2xl md:text-3xl font-semibold text-center text-yellow-300 mb-12">
-            Chronologie des Événements
-          </h3>
-          
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 top-0 bottom-0 w-0.5 bg-yellow-300/30" />
-            
-            <div className="space-y-12">
-              {timeline.map((item, index) => (
-                <div 
-                  key={index}
-                  className={`relative flex items-start ${
-                    index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                  }`}
-                >
-                  {/* Timeline dot */}
-                  <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-yellow-300 rounded-full border-4 border-gray-800 z-10" />
-                  
-                  <div className={`w-full md:w-5/12 ml-16 md:ml-0 ${
-                    index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'
-                  }`}>
-                    <div className="bg-gray-800/60 p-6 rounded-lg border border-gray-600 shadow-lg">
-                      <div className="text-sm text-yellow-300 font-semibold mb-2">{item.date}</div>
-                      <h4 className="font-serif text-lg font-semibold text-white mb-3">
-                        {item.event}
-                      </h4>
-                      <p className="text-gray-300 leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
+        <div className="space-y-32">
+          {sections.map((section, index) => (
+            <div
+              key={index}
+              ref={el => sectionRefs.current[index] = el}
+              className={`transition-all duration-1000 ${
+                visibleSections.includes(index) 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-10'
+              }`}
+            >
+              <div className={`grid md:grid-cols-2 gap-12 items-center ${
+                index % 2 === 1 ? 'md:grid-flow-col-dense' : ''
+              }`}>
+                <div className={index % 2 === 1 ? 'md:col-start-2' : ''}>
+                  <h3 className="font-serif text-2xl md:text-3xl font-semibold text-yellow-300 mb-6">
+                    {section.title}
+                  </h3>
+                  <p className="text-lg text-gray-200 leading-relaxed">
+                    {section.content}
+                  </p>
+                </div>
+                
+                <div className={`${index % 2 === 1 ? 'md:col-start-1 md:row-start-1' : ''}`}>
+                  <div className="relative overflow-hidden rounded-lg shadow-2xl">
+                    <img
+                      src={section.image}
+                      alt={section.title}
+                      className="w-full h-64 md:h-80 object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
-          </div>
-        </div>
-
-        {/* Final message */}
-        <div className={`text-center mt-16 p-8 bg-red-900/20 border border-red-500/30 rounded-lg transition-all duration-1000 delay-700 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}>
-          <blockquote className="font-serif text-xl md:text-2xl italic text-gray-200 mb-4">
-            "Ce jour-là, la France a tiré sur ses propres soldats.<br />
-            Un crime resté dans l'ombre pendant des décennies."
-          </blockquote>
-          <cite className="text-gray-400">— Archives historiques de Thiaroye</cite>
+          ))}
         </div>
       </div>
     </section>
